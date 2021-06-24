@@ -1,16 +1,38 @@
-import { BrowserRouter, Route } from 'react-router-dom';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { AuthContextProvider } from './contexts/authContext';
 import { Home } from './pages/Home';
 import { NewRoom } from './pages/NewRoom';
+import { Room } from './pages/Room';
+
 import './styles/global.scss';
+
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
+//Inicializar toast.
+toast.configure();
 
 function App() {
   return (
     <AuthContextProvider>
       <BrowserRouter>
-        <Route path="/" exact component={Home}/>
-        <Route path="/rooms/new" component={NewRoom}/>
+        <Switch>
+          <Route path="/" exact component={Home}/>
+          <Route path="/rooms/new" component={NewRoom}/>
+          <Route path="/rooms/:id"  component={Room}/>
+        </Switch>
       </BrowserRouter>
+      <ToastContainer 
+        position="top-center"
+        autoClose={3000}
+        hideProgressBar
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss={false}
+        draggable
+        pauseOnHover
+      />
     </AuthContextProvider>
   );
 }

@@ -1,11 +1,12 @@
 .button {
-  margin-top: 64px;
   height: 5rem;
   background-color: #835afd;
   color: #FFF;
   border: 0;
   border-radius: 8px;
   cursor: pointer;
+  padding: 0 32px;
+  font-weight: 500;
 
   display: flex;
   justify-content: center;
