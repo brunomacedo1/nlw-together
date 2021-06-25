@@ -1,14 +1,17 @@
+import { useHistory, useParams } from "react-router-dom";
+import { useRoom } from "../../hooks/useRoom";
+import { toast } from "react-toastify";
+import { database } from "../../services/firebase";
+
 import { Button } from "../../components/Button"
 import { RoomCode } from "../../components/RoomCode";
-import { useHistory, useParams } from "react-router-dom";
-import deleteImg from '../../assets/images/delete.svg';
-// import { FormEvent, useState } from "react";
-import { database } from "../../services/firebase";
-// import { useAuth } from "../../hooks/useAuth";
-import { toast } from "react-toastify";
 import { Logo } from "../../components/Logo";
 import { Question } from '../../components/Question';
-import { useRoom } from "../../hooks/useRoom";
+import deleteImg from '../../assets/images/delete.svg';
+import checkImg from '../../assets/images/check.svg';
+import answerImg from '../../assets/images/answer.svg';
+// import { FormEvent, useState } from "react";
+// import { useAuth } from "../../hooks/useAuth";
 import './styles.scss'
 
 type RoomParams = {
@@ -33,18 +36,52 @@ export const AdminRoom = () => {
   const handleDeleteQuestion = async (questionId: string) => {
     if (window.confirm('Are you sure you want to delete this question?')) {
       await database.ref(`rooms/${roomId}/questions/${questionId}`).remove();
-      toast('Question deleted with success.')
+      toast('Question deleted with success.');
     }
   }
+
+  const handleCheckQuestionAsAnswered = async  (questionId: string) => {
+    await database.ref(`rooms/${roomId}/questions/${questionId}`).update({
+      isAnswered: true
+    });
+  }
+
+  const handleHighlightQuestion = async (questionId: string) => {
+    await database.ref(`rooms/${roomId}/questions/${questionId}`).update({
+      isHighLighted: true
+    });
+  }
+
 
   const renderQuestions = () => {
     return questions.map(question =>{
       return (
-        <Question key={question.id} content={question.content} author={question.author}>
+        <Question 
+          key={question.id} 
+          content={question.content} 
+          author={question.author}
+          isAnswered={question.isAnswered}
+          isHighLighted={question.isHighLighted}
+        >
+          {!question.isAnswered && (
+            <>
+              <button 
+                onClick={() => handleCheckQuestionAsAnswered(question.id)} 
+                type="button" 
+              >
+                <img src={checkImg} alt="Check question" />
+              </button>
+              <button 
+                onClick={() => handleHighlightQuestion(question.id)} 
+                type="button" 
+              >
+                <img src={answerImg} alt="Highlight question" />
+              </button>
+            </>
+          )}
           <button 
             onClick={() => handleDeleteQuestion(question.id)} 
             type="button" 
-            className="delete"
           >
             <img src={deleteImg} alt="Delete question" />
           </button>
