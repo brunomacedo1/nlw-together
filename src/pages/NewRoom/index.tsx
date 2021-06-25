@@ -1,12 +1,12 @@
 import { useState } from 'react';
-import { useAuth } from '../hooks/useAuth';
-import { database } from '../services/firebase';
+import { useAuth } from '../../hooks/useAuth';
+import { database } from '../../services/firebase';
 import {FormEvent} from 'react';
 import {Link, useHistory} from 'react-router-dom'
-import { Button } from '../components/Button';
-import illustrationImg from '../assets/images/illustration.svg';
-import '../styles/auth.scss'
-import { Logo } from '../components/Logo';
+import { Button } from '../../components/Button';
+import illustrationImg from '../../assets/images/illustration.svg';
+import { Logo } from '../../components/Logo';
+import './styles.scss'
 
 export const NewRoom = () => {
   const history =  useHistory();

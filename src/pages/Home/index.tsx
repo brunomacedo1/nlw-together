@@ -1,14 +1,14 @@
 import { FormEvent, useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { useAuth } from '../hooks/useAuth';
-import { Button } from '../components/Button';
-import illustrationImg from '../assets/images/illustration.svg';
-import googleIconImg from '../assets/images/google-icon.svg'
+import { useAuth } from '../../hooks/useAuth';
+import { Button } from '../../components/Button';
+import illustrationImg from '../../assets/images/illustration.svg';
+import googleIconImg from '../../assets/images/google-icon.svg'
 
-import '../styles/auth.scss'
-import { database } from '../services/firebase';
+import './styles.scss'
+import { database } from '../../services/firebase';
 import { toast } from 'react-toastify';
-import { Logo } from '../components/Logo';
+import { Logo } from '../../components/Logo';
 
 export const Home = () => {
   const [ roomCode, setRoomCode] = useState('');
@@ -31,6 +31,11 @@ export const Home = () => {
     const roomRef = await database.ref(`rooms/${roomCode}`).get();
     if(!roomRef.exists()) {
       toast('Room does not exist.')
+      return;
+    }
+
+    if(roomRef.val().endedAt){
+      toast('Room already closed.')
       return;
     }
     history.push(`/rooms/${roomCode}`)

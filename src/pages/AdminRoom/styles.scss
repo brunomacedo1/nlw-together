@@ -14,6 +14,16 @@
           max-height: 45px;
         }
       }
+
+      > div {
+        display: flex;
+        align-items: center;
+        gap: 16px; /* Só é aplicado se existir dois elementos ou mais na div*/
+
+        button {
+          height: 40px;
+        }
+      }
     }
   }
 
@@ -95,6 +105,10 @@
           color: #835AFD;
         }
       }
+    }
+
+    .question-list {
+      margin-top: 32px;
     }
   }
 }

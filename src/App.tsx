@@ -8,6 +8,7 @@ import './styles/global.scss';
 
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { AdminRoom } from './pages/AdminRoom';
 
 //Inicializar toast.
 toast.configure();
@@ -20,6 +21,8 @@ function App() {
           <Route path="/" exact component={Home}/>
           <Route path="/rooms/new" component={NewRoom}/>
           <Route path="/rooms/:id"  component={Room}/>
+
+          <Route path="/admin/rooms/:id"  component={AdminRoom}/>
         </Switch>
       </BrowserRouter>
       <ToastContainer 
